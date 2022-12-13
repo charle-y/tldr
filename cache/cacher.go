@@ -2,7 +2,6 @@ package cache
 
 import (
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
@@ -73,8 +72,8 @@ func (c *cacher) extendedSearch(tried []platform.Platform) *os.File {
 }
 
 func (c *cacher) find() *os.File {
-	for _, fileInfo := range c.readDir() {
-		if fileInfo.Name() == c.name {
+	for _, fileEntry := range c.readDir() {
+		if fileInfo, _ := fileEntry.Info(); fileInfo.Name() == c.name {
 			file, err := os.Open(c.file())
 			if err != nil {
 				log.Fatal(err)
@@ -98,7 +97,7 @@ func (c *cacher) save() *os.File {
 		return nil
 	}
 
-	buf, err := ioutil.ReadAll(down)
+	buf, err := io.ReadAll(down)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -151,11 +150,11 @@ func (c *cacher) createDir() {
 	}
 }
 
-func (c *cacher) readDir() []os.FileInfo {
+func (c *cacher) readDir() []os.DirEntry {
 	c.createDir()
-	srcDir, err := ioutil.ReadDir(c.platformDir())
+	srcEntries, err := os.ReadDir(c.platformDir())
 	if err != nil {
 		log.Fatal(err)
 	}
-	return srcDir
+	return srcEntries
 }
