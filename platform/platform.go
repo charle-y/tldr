@@ -13,6 +13,8 @@ const (
 	UNKNOWN Platform = iota
 	// COMMON is a reference to the common directory of the TLDR page assets.
 	COMMON
+	// ANDROID is a reference to the android directory of the TLDR page assets.
+	ANDROID
 	// LINUX is a reference to the linux directory of the TLDR page assets.
 	LINUX
 	// OSX is a reference to the osx directory of the TLDR page assets.
@@ -26,6 +28,7 @@ const (
 var platformMap = map[Platform]string{
 	UNKNOWN: `unknown`,
 	COMMON:  `common`,
+	ANDROID: `android`,
 	LINUX:   `linux`,
 	OSX:     `osx`,
 	SUNOS:   `sunos`,
@@ -72,6 +75,8 @@ func Platforms() []string {
 // it returns COMMON.
 func Actual() Platform {
 	switch runtime.GOOS {
+	case `android`:
+		return ANDROID
 	case `freebsd`, `netbsd`, `openbsd`, `plan9`, `linux`:
 		return LINUX
 	case `darwin`:
