@@ -23,7 +23,9 @@ func init() {
 			log.Fatal(err)
 		}
 	}
+}
 
+func ConstructCache() {
 	getAssets()
 }
 

@@ -36,6 +36,9 @@ func tldr() {
 	setLogDebug()
 
 	config.Load()
+
+	cache.ConstructCache()
+
 	plat := platform.ParseFlag(flagSet.Lookup("p"))
 
 	if clear := flagSet.Lookup("c"); clear.Value.String() != "" {

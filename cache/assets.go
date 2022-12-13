@@ -20,7 +20,7 @@ func getAssets() { // nolint: gocyclo
 		}
 	}
 
-	page := pages.Pages{}
+	page := pages.New("", 0)
 	resp := page.Zip()
 
 	contents, err := io.ReadAll(resp)
